@@ -12,16 +12,16 @@
     
     <style>
         :root {
-            /* Dark Theme (Default) */
-            --bg-primary: #0f0f13;
-            --bg-secondary: #1a1a20;
-            --text-primary: #ffffff;
-            --text-secondary: #a0a0b0;
-            --accent: #3b82f6;
-            --accent-hover: #60a5fa;
-            --card-bg: #1e1e26;
-            --border: #2d2d3a;
-            --nav-bg: rgba(15, 15, 19, 0.8);
+            /* Dark Theme (Forest Night) */
+            --bg-primary: #0b1410;
+            --bg-secondary: #0f1e16;
+            --text-primary: #ecf3f0;
+            --text-secondary: #a7b8ae;
+            --accent: #10b981;
+            --accent-hover: #34d399;
+            --card-bg: #14251e;
+            --border: #26382f;
+            --nav-bg: rgba(11, 20, 16, 0.82);
             --toast-success: #10b981;
             
             --font-main: 'Inter', sans-serif;
@@ -30,15 +30,16 @@
         }
 
         [data-theme="light"] {
-            --bg-primary: #f8fafc;
-            --bg-secondary: #f1f5f9;
-            --text-primary: #0f172a;
-            --text-secondary: #475569;
-            --accent: #2563eb;
-            --accent-hover: #1d4ed8;
+            /* Light Theme (Forest Day) */
+            --bg-primary: #f1f7f4;
+            --bg-secondary: #e5ede9;
+            --text-primary: #064e3b;
+            --text-secondary: #4b635a;
+            --accent: #15803d;
+            --accent-hover: #166534;
             --card-bg: #ffffff;
-            --border: #e2e8f0;
-            --nav-bg: rgba(248, 250, 252, 0.8);
+            --border: #cedbd3;
+            --nav-bg: rgba(241, 247, 244, 0.82);
         }
 
         * {
@@ -179,7 +180,7 @@
             display: flex;
             align-items: center;
             overflow: hidden;
-            background: radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.05) 0%, transparent 70%);
+            background: radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.08) 0%, transparent 70%);
         }
 
         .hero-content {
@@ -246,7 +247,7 @@
         .btn-primary:hover {
             background: var(--accent-hover);
             transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+            box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3);
         }
 
         .btn-outline {
@@ -257,7 +258,7 @@
 
         .btn-outline:hover {
             border-color: var(--accent);
-            background: rgba(59, 130, 246, 0.05);
+            background: rgba(16, 185, 129, 0.05);
             transform: translateY(-3px);
         }
 
@@ -485,7 +486,7 @@
         .tag {
             font-size: 0.7rem;
             padding: 4px 10px;
-            background: rgba(59, 130, 246, 0.1);
+            background: rgba(16, 185, 129, 0.1);
             color: var(--accent);
             border-radius: 20px;
             font-weight: 600;
