@@ -12,17 +12,25 @@
     
     <style>
         :root {
-            /* Dark Theme (Forest Night) */
-            --bg-primary: #0b1410;
-            --bg-secondary: #0f1e16;
-            --text-primary: #ecf3f0;
-            --text-secondary: #a7b8ae;
-            --accent: #10b981;
-            --accent-hover: #34d399;
-            --card-bg: #14251e;
-            --border: #26382f;
-            --nav-bg: rgba(11, 20, 16, 0.82);
-            --toast-success: #10b981;
+            /* Dark Theme: Ghost Purple (#4B286D), Shadow Black (#171717), Phantom Violet (#C05CC9) */
+            --bg-primary: #171717;
+            --bg-secondary: #121212;
+            --text-primary: #f6f3f8;
+            --text-secondary: #ad9eb8;
+            --accent: #C05CC9;
+            --accent-hover: #d272db;
+            --ghost-purple: #4B286D;
+            --ghost-purple-light: #643690;
+            --card-bg: #201a27;
+            --card-hover-bg: #281f33;
+            --border: #3b2450;
+            --border-glow: #C05CC9;
+            --nav-bg: rgba(23, 23, 23, 0.88);
+            --toast-success: #C05CC9;
+            --hero-glow-1: rgba(192, 92, 201, 0.20);
+            --hero-glow-2: rgba(75, 40, 109, 0.40);
+            --accent-glow: rgba(192, 92, 201, 0.35);
+            --accent-tag-bg: rgba(192, 92, 201, 0.14);
             
             --font-main: 'Inter', sans-serif;
             --font-heading: 'Space Grotesk', sans-serif;
@@ -30,16 +38,25 @@
         }
 
         [data-theme="light"] {
-            /* Light Theme (Forest Day) */
-            --bg-primary: #f1f7f4;
-            --bg-secondary: #e5ede9;
-            --text-primary: #064e3b;
-            --text-secondary: #4b635a;
-            --accent: #15803d;
-            --accent-hover: #166534;
+            /* Light Theme: Clean luxury variant with Ghost Purple and Phantom Violet */
+            --bg-primary: #faf6fd;
+            --bg-secondary: #f2eaf7;
+            --text-primary: #171717;
+            --text-secondary: #573a70;
+            --accent: #9d2ca8;
+            --accent-hover: #4B286D;
+            --ghost-purple: #4B286D;
+            --ghost-purple-light: #643690;
             --card-bg: #ffffff;
-            --border: #cedbd3;
-            --nav-bg: rgba(241, 247, 244, 0.82);
+            --card-hover-bg: #fdfafd;
+            --border: #e3d2ee;
+            --border-glow: #C05CC9;
+            --nav-bg: rgba(250, 246, 253, 0.88);
+            --toast-success: #9d2ca8;
+            --hero-glow-1: rgba(192, 92, 201, 0.14);
+            --hero-glow-2: rgba(75, 40, 109, 0.16);
+            --accent-glow: rgba(157, 44, 168, 0.25);
+            --accent-tag-bg: rgba(192, 92, 201, 0.12);
         }
 
         * {
@@ -180,7 +197,8 @@
             display: flex;
             align-items: center;
             overflow: hidden;
-            background: radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.08) 0%, transparent 70%);
+            background: radial-gradient(circle at 20% 30%, var(--hero-glow-1) 0%, transparent 60%),
+                        radial-gradient(circle at 80% 70%, var(--hero-glow-2) 0%, transparent 50%);
         }
 
         .hero-content {
@@ -243,11 +261,11 @@
             transition: var(--transition);
         }
 
-        .btn-primary { background: var(--accent); color: white; border: none; }
+        .btn-primary { background: var(--accent); color: #ffffff; border: none; font-weight: 600; }
         .btn-primary:hover {
             background: var(--accent-hover);
             transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3);
+            box-shadow: 0 10px 24px var(--accent-glow);
         }
 
         .btn-outline {
@@ -258,8 +276,10 @@
 
         .btn-outline:hover {
             border-color: var(--accent);
-            background: rgba(16, 185, 129, 0.05);
+            background: var(--accent-tag-bg);
+            color: var(--accent);
             transform: translateY(-3px);
+            box-shadow: 0 6px 18px var(--accent-glow);
         }
 
         .social-links {
@@ -371,6 +391,13 @@
             border-radius: 12px;
             border: 1px solid var(--border);
             text-align: center;
+            transition: var(--transition);
+        }
+
+        .stat-item:hover {
+            border-color: var(--border-glow);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3), 0 0 15px var(--accent-glow);
         }
 
         .stat-number {
@@ -421,7 +448,7 @@
         .skill-card:hover {
             transform: translateY(-5px);
             border-color: var(--accent);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.35), 0 0 20px var(--accent-glow);
         }
 
         .skill-icon {
@@ -464,7 +491,8 @@
 
         .project-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            border-color: var(--border-glow);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 25px var(--accent-glow);
         }
 
         .project-img {
@@ -484,10 +512,11 @@
         }
 
         .tag {
-            font-size: 0.7rem;
-            padding: 4px 10px;
-            background: rgba(16, 185, 129, 0.1);
+            font-size: 0.75rem;
+            padding: 4px 12px;
+            background: var(--accent-tag-bg);
             color: var(--accent);
+            border: 1px solid var(--border);
             border-radius: 20px;
             font-weight: 600;
         }
@@ -535,14 +564,16 @@
 
         .info-icon {
             width: 50px; height: 50px;
-            background: rgba(59, 130, 246, 0.1);
+            background: var(--accent-tag-bg);
             color: var(--accent);
+            border: 1px solid var(--border);
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 1.2rem;
             flex-shrink: 0;
+            box-shadow: 0 4px 12px rgba(75, 40, 109, 0.2);
         }
 
         .info-content h4 { margin-bottom: 0.3rem; }
@@ -553,6 +584,7 @@
             padding: 3rem;
             border-radius: 16px;
             border: 1px solid var(--border);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
         }
 
         .form-group { margin-bottom: 1.5rem; position: relative; }
@@ -579,7 +611,7 @@
         .form-control:focus {
             outline: none;
             border-color: var(--accent);
-            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+            box-shadow: 0 0 0 4px var(--accent-glow);
         }
 
         textarea.form-control { resize: none; height: 150px; }
@@ -686,6 +718,7 @@
                 <li><a href="#about" class="nav-item">About</a></li>
                 <li><a href="#skills" class="nav-item">Skills</a></li>
                 <li><a href="#projects" class="nav-item">Projects</a></li>
+                <li><a href="/apps.html" class="nav-item" style="color:var(--accent); font-weight:600;">⚡ Apps Suite</a></li>
                 <li><a href="#contact" class="nav-item">Contact</a></li>
                 <li>
                     <button class="theme-toggle" id="theme-toggle" aria-label="Toggle Theme">
@@ -880,6 +913,23 @@
                             <div class="project-links">
                                 <a href="#" class="project-link">Live Demo &nearr;</a>
                                 <a href="#" class="project-link">GitHub &nearr;</a>
+                            </div>
+                        </div>
+                    </article>
+                    <!-- Project 4: AC Simulator -->
+                    <article class="project-card animate-on-scroll">
+                        <img src="https://picsum.photos/600/400?random=4" alt="AC Capacity & Electricity Cost Simulator" class="project-img" referrerPolicy="no-referrer">
+                        <div class="project-info">
+                            <div class="project-tags">
+                                <span class="tag">Standalone App</span>
+                                <span class="tag">Energy Sizing</span>
+                                <span class="tag">Vanilla JS</span>
+                            </div>
+                            <h3 class="project-title">AC Capacity & Cost Simulator</h3>
+                            <p class="project-desc">Real-time room cooling load calculator (BTU & PK/HP), electrical consumption estimator, and Inverter vs Standard monthly cost comparison engine.</p>
+                            <div class="project-links">
+                                <a href="/apps.html#ac-sim" class="project-link" style="color:var(--accent); font-weight:700;">Open Live App &rarr;</a>
+                                <a href="/apps.html" class="project-link">Apps Suite &nearr;</a>
                             </div>
                         </div>
                     </article>

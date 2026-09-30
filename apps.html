@@ -1,0 +1,1641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Tools & Apps Suite | John Doe</title>
+    <meta name="description" content="Interactive suite of utility web apps including AC Sizing & Electricity Simulator, Appliance Energy Auditor, and Room Lighting Calculator.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* Dark Theme: Ghost Purple (#4B286D), Shadow Black (#171717), Phantom Violet (#C05CC9) */
+            --bg-primary: #171717;
+            --bg-secondary: #121212;
+            --text-primary: #f6f3f8;
+            --text-secondary: #ad9eb8;
+            --accent: #C05CC9;
+            --accent-hover: #d272db;
+            --ghost-purple: #4B286D;
+            --ghost-purple-light: #643690;
+            --card-bg: #201a27;
+            --card-hover-bg: #281f33;
+            --border: #3b2450;
+            --border-glow: #C05CC9;
+            --nav-bg: rgba(23, 23, 23, 0.92);
+            --toast-success: #C05CC9;
+            --hero-glow-1: rgba(192, 92, 201, 0.20);
+            --hero-glow-2: rgba(75, 40, 109, 0.40);
+            --accent-glow: rgba(192, 92, 201, 0.35);
+            --accent-tag-bg: rgba(192, 92, 201, 0.14);
+            
+            --font-main: 'Inter', sans-serif;
+            --font-heading: 'Space Grotesk', sans-serif;
+            --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        [data-theme="light"] {
+            /* Light Theme */
+            --bg-primary: #faf6fd;
+            --bg-secondary: #f2eaf7;
+            --text-primary: #171717;
+            --text-secondary: #573a70;
+            --accent: #9d2ca8;
+            --accent-hover: #4B286D;
+            --ghost-purple: #4B286D;
+            --ghost-purple-light: #643690;
+            --card-bg: #ffffff;
+            --card-hover-bg: #fdfafd;
+            --border: #e3d2ee;
+            --border-glow: #C05CC9;
+            --nav-bg: rgba(250, 246, 253, 0.92);
+            --toast-success: #9d2ca8;
+            --hero-glow-1: rgba(192, 92, 201, 0.14);
+            --hero-glow-2: rgba(75, 40, 109, 0.16);
+            --accent-glow: rgba(157, 44, 168, 0.25);
+            --accent-tag-bg: rgba(192, 92, 201, 0.12);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        h1, h2, h3, h4, h5 {
+            font-family: var(--font-heading);
+            font-weight: 700;
+        }
+
+        a { text-decoration: none; color: inherit; transition: var(--transition); }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            width: 100%;
+        }
+
+        /* Top Navbar */
+        nav.app-nav {
+            position: sticky;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: var(--nav-bg);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            height: 70px;
+            display: flex;
+            align-items: center;
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .brand-logo {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .brand-badge {
+            font-size: 0.72rem;
+            background: var(--accent-tag-bg);
+            border: 1px solid var(--border);
+            color: var(--accent);
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .btn-back-portfolio {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            padding: 8px 16px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: var(--bg-secondary);
+            transition: var(--transition);
+        }
+
+        .btn-back-portfolio:hover {
+            color: var(--accent);
+            border-color: var(--accent);
+            background: var(--accent-tag-bg);
+            box-shadow: 0 4px 12px var(--accent-glow);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-primary);
+            padding: 8px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .theme-toggle:hover { background: var(--border); }
+
+        /* Main Layout */
+        main.apps-workspace {
+            flex: 1;
+            padding: 2.5rem 0 4rem;
+            background: radial-gradient(circle at 10% 20%, var(--hero-glow-1) 0%, transparent 40%),
+                        radial-gradient(circle at 90% 80%, var(--hero-glow-2) 0%, transparent 45%);
+        }
+
+        /* App Directory Bar (Tabs) */
+        .apps-selector-bar {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 0.8rem;
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            flex-wrap: wrap;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        .app-tabs {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .app-tab {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 10px 18px;
+            border-radius: 10px;
+            border: 1px solid transparent;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            background: transparent;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .app-tab:hover {
+            color: var(--text-primary);
+            background: var(--bg-primary);
+        }
+
+        .app-tab.active {
+            background: var(--ghost-purple);
+            color: #ffffff;
+            border-color: var(--accent);
+            box-shadow: 0 4px 14px var(--accent-glow);
+        }
+
+        .app-tab-badge {
+            font-size: 0.7rem;
+            padding: 2px 6px;
+            border-radius: 10px;
+            background: var(--accent);
+            color: #ffffff;
+        }
+
+        .app-status-indicator {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding-right: 0.5rem;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #10b981;
+            box-shadow: 0 0 8px #10b981;
+        }
+
+        /* App Container Views */
+        .app-view {
+            display: none;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .app-view.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* App Header */
+        .app-header {
+            margin-bottom: 2rem;
+        }
+
+        .app-header-top {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .app-cat-tag {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 700;
+            color: var(--accent);
+            background: var(--accent-tag-bg);
+            padding: 3px 12px;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+        }
+
+        .app-header h1 {
+            font-size: 2.2rem;
+            line-height: 1.2;
+            color: var(--text-primary);
+        }
+
+        .app-header p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            max-width: 800px;
+            margin-top: 0.4rem;
+        }
+
+        /* Grid System for Tool Panels */
+        .tool-grid {
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: 2rem;
+            align-items: start;
+        }
+
+        .tool-panel {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2.2rem;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+            transition: var(--transition);
+        }
+
+        .tool-panel:hover {
+            border-color: var(--border-glow);
+        }
+
+        .panel-heading {
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            color: var(--text-primary);
+        }
+
+        /* Form & Slider Controls */
+        .control-group {
+            margin-bottom: 1.4rem;
+        }
+
+        .control-label-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        .val-badge {
+            font-weight: 700;
+            color: var(--accent);
+            background: var(--bg-primary);
+            padding: 2px 10px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            font-size: 0.85rem;
+        }
+
+        .slider-range {
+            width: 100%;
+            height: 6px;
+            background: var(--bg-primary);
+            border-radius: 4px;
+            outline: none;
+            -webkit-appearance: none;
+            accent-color: var(--accent);
+            cursor: pointer;
+        }
+
+        .slider-range::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--accent);
+            cursor: pointer;
+            box-shadow: 0 0 10px var(--accent-glow);
+            transition: transform 0.15s ease;
+        }
+
+        .slider-range::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+
+        .preset-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.4rem;
+        }
+
+        .btn-preset {
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-preset:hover, .btn-preset.active {
+            background: var(--ghost-purple);
+            color: #ffffff;
+            border-color: var(--accent);
+            box-shadow: 0 4px 12px var(--accent-glow);
+        }
+
+        .toggle-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+            gap: 0.5rem;
+        }
+
+        .btn-toggle {
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 8px 10px;
+            border-radius: 8px;
+            font-size: 0.82rem;
+            font-weight: 500;
+            cursor: pointer;
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .btn-toggle:hover {
+            border-color: var(--accent);
+            color: var(--text-primary);
+        }
+
+        .btn-toggle.active {
+            background: var(--accent-tag-bg);
+            border-color: var(--accent);
+            color: var(--accent);
+            font-weight: 600;
+            box-shadow: 0 0 12px var(--accent-glow);
+        }
+
+        .form-input {
+            width: 100%;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            padding: 0.6rem 0.9rem;
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-family: var(--font-main);
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+
+        /* 2D Room & AC Visualizer */
+        .room-visual-box {
+            position: relative;
+            height: 140px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .room-ac-unit {
+            position: absolute;
+            top: 12px;
+            width: 90px;
+            height: 24px;
+            background: linear-gradient(135deg, #ffffff, #dcd4e8);
+            border-radius: 4px;
+            border: 1px solid #c0b0d6;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.65rem;
+            font-weight: 700;
+            color: #4B286D;
+            z-index: 2;
+        }
+
+        .air-wave {
+            position: absolute;
+            top: 36px;
+            width: 150px;
+            height: 80px;
+            background: radial-gradient(ellipse at 50% 0%, var(--accent-glow) 0%, transparent 70%);
+            border-radius: 0 0 50% 50%;
+            animation: breeze 2s ease-in-out infinite alternate;
+            pointer-events: none;
+        }
+
+        @keyframes breeze {
+            0% { transform: scaleX(0.85) translateY(0); opacity: 0.4; }
+            100% { transform: scaleX(1.15) translateY(10px); opacity: 0.85; }
+        }
+
+        .room-info-overlay {
+            position: absolute;
+            bottom: 10px;
+            display: flex;
+            gap: 0.8rem;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            background: var(--card-bg);
+            padding: 4px 12px;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+        }
+
+        /* Banner & Metrics */
+        .hero-rec-banner {
+            background: linear-gradient(135deg, var(--ghost-purple), #261539);
+            border: 1px solid var(--accent);
+            border-radius: 14px;
+            padding: 1.5rem;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 10px 25px var(--accent-glow);
+        }
+
+        .hero-rec-title {
+            font-size: 2.3rem;
+            font-weight: 800;
+            color: #ffffff;
+            font-family: var(--font-heading);
+            line-height: 1.1;
+        }
+
+        .hero-rec-sub {
+            font-size: 0.95rem;
+            color: var(--accent);
+            font-weight: 600;
+            margin-top: 4px;
+        }
+
+        .hero-rec-desc {
+            font-size: 0.85rem;
+            color: #d8cde6;
+            margin-top: 6px;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .metric-card {
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .metric-card-label {
+            font-size: 0.72rem;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .metric-card-val {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--accent);
+            font-family: var(--font-heading);
+        }
+
+        .metric-card-sub {
+            font-size: 0.72rem;
+            color: var(--text-secondary);
+            margin-top: 2px;
+        }
+
+        .highlight-callout {
+            background: var(--accent-tag-bg);
+            border: 1px dashed var(--accent);
+            border-radius: 10px;
+            padding: 1rem 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .highlight-callout h5 {
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            margin-bottom: 2px;
+        }
+
+        .highlight-callout p {
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+        }
+
+        .highlight-val {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--accent);
+            white-space: nowrap;
+        }
+
+        .info-pill-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            padding: 8px 12px;
+            background: var(--bg-primary);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            margin-bottom: 1.2rem;
+        }
+
+        .info-pill-row strong {
+            color: var(--text-primary);
+        }
+
+        .btn-action-wide {
+            width: 100%;
+            background: var(--bg-primary);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            padding: 0.8rem 1.2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            transition: var(--transition);
+        }
+
+        .btn-action-wide:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: var(--accent-tag-bg);
+            box-shadow: 0 4px 15px var(--accent-glow);
+        }
+
+        /* Appliance Audit Table */
+        .appliance-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.88rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .appliance-table th, .appliance-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid var(--border);
+            text-align: left;
+        }
+
+        .appliance-table th {
+            color: var(--text-secondary);
+            font-weight: 600;
+            font-size: 0.78rem;
+            text-transform: uppercase;
+        }
+
+        /* Lighting Visualizer Preview */
+        .light-bulb-preview {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            padding: 1.5rem;
+            background: var(--bg-primary);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            margin-bottom: 1.5rem;
+        }
+
+        .bulb-icon-unit {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(245, 158, 11, 0.15);
+            border: 1px solid #f59e0b;
+            color: #f59e0b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: 0 0 14px rgba(245, 158, 11, 0.35);
+            animation: pulseBulb 2s infinite alternate;
+        }
+
+        @keyframes pulseBulb {
+            0% { transform: scale(0.95); opacity: 0.8; }
+            100% { transform: scale(1.05); opacity: 1; }
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            padding: 1rem 1.8rem;
+            border-radius: 10px;
+            color: #ffffff;
+            background: var(--toast-success);
+            z-index: 2000;
+            transform: translateY(100px);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .toast.show { transform: translateY(0); }
+
+        /* Footer */
+        footer.app-footer {
+            padding: 30px 0;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            background: var(--bg-secondary);
+        }
+
+        @media (max-width: 992px) {
+            .tool-grid { grid-template-columns: 1fr; }
+            .metrics-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 600px) {
+            .metrics-grid { grid-template-columns: 1fr; }
+            .app-header h1 { font-size: 1.8rem; }
+            .tool-panel { padding: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Top Navigation -->
+    <nav class="app-nav">
+        <div class="container">
+            <div class="nav-brand">
+                <a href="/index.html" class="brand-logo">
+                    <span>⚡</span> John's AppLab
+                </a>
+                <span class="brand-badge">Utilities Suite</span>
+            </div>
+            <div class="nav-actions">
+                <a href="/index.html" class="btn-back-portfolio">
+                    <span>←</span>
+                    <span>Back to Portfolio</span>
+                </a>
+                <button class="theme-toggle" id="theme-toggle" aria-label="Toggle Theme">
+                    <svg id="sun-icon" style="display:none;" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+                    <svg id="moon-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Workspace -->
+    <main class="apps-workspace">
+        <div class="container">
+
+            <!-- App Switcher Tabs -->
+            <div class="apps-selector-bar">
+                <div class="app-tabs">
+                    <button type="button" class="app-tab active" data-target="app-ac-sim">
+                        <span>❄️</span>
+                        <span>AC Capacity & Cost Simulator</span>
+                        <span class="app-tab-badge">Core</span>
+                    </button>
+                    <button type="button" class="app-tab" data-target="app-energy-audit">
+                        <span>⚡</span>
+                        <span>Appliance Energy Auditor</span>
+                    </button>
+                    <button type="button" class="app-tab" data-target="app-lighting">
+                        <span>💡</span>
+                        <span>Room Lighting & Lux Sizer</span>
+                    </button>
+                </div>
+                <div class="app-status-indicator">
+                    <span class="status-dot"></span>
+                    <span>All tools running client-side (No backend delay)</span>
+                </div>
+            </div>
+
+            <!-- ============================================== -->
+            <!-- APP 1: AC CAPACITY & ELECTRICITY COST SIMULATOR -->
+            <!-- ============================================== -->
+            <div class="app-view active" id="app-ac-sim">
+                <div class="app-header">
+                    <div class="app-header-top">
+                        <span class="app-cat-tag">Cooling & Electrical Engineering</span>
+                    </div>
+                    <h1>AC Capacity & Electricity Cost Simulator</h1>
+                    <p>Calculate optimal air conditioning cooling loads (BTU/hr & PK/HP) based on room physics, sunlight, and occupants, with real-time Inverter vs Standard monthly cost forecasting.</p>
+                </div>
+
+                <div class="tool-grid">
+                    <!-- Controls Column -->
+                    <div class="tool-panel">
+                        <h3 class="panel-heading">
+                            <span>📐</span> Room Dimensions & Thermal Factors
+                        </h3>
+
+                        <!-- Presets -->
+                        <div class="control-group">
+                            <div class="control-label-row"><span>Quick Room Presets</span></div>
+                            <div class="preset-row" id="ac-preset-row">
+                                <button type="button" class="btn-preset active" data-len="3" data-wid="3" data-h="2.8" data-sun="low" data-people="1">Small Bedroom (3×3m)</button>
+                                <button type="button" class="btn-preset" data-len="4" data-wid="4" data-h="2.8" data-sun="med" data-people="2">Master Bedroom (4×4m)</button>
+                                <button type="button" class="btn-preset" data-len="5" data-wid="6" data-h="3.2" data-sun="med" data-people="4">Living Room (5×6m)</button>
+                                <button type="button" class="btn-preset" data-len="3" data-wid="4" data-h="2.8" data-sun="high" data-people="1">Office / Attic (3×4m)</button>
+                            </div>
+                        </div>
+
+                        <!-- Room Length -->
+                        <div class="control-group">
+                            <div class="control-label-row">
+                                <span>Room Length</span>
+                                <span class="val-badge" id="ac-lbl-len">3.0 m</span>
+                            </div>
+                            <input type="range" min="2" max="10" step="0.5" value="3" class="slider-range" id="ac-input-len">
+                        </div>
+
+                        <!-- Room Width -->
+                        <div class="control-group">
+                            <div class="control-label-row">
+                                <span>Room Width</span>
+                                <span class="val-badge" id="ac-lbl-wid">3.0 m</span>
+                            </div>
+                            <input type="range" min="2" max="10" step="0.5" value="3" class="slider-range" id="ac-input-wid">
+                        </div>
+
+                        <!-- Ceiling Height -->
+                        <div class="control-group">
+                            <div class="control-label-row">
+                                <span>Ceiling Height</span>
+                                <span class="val-badge" id="ac-lbl-h">2.8 m</span>
+                            </div>
+                            <input type="range" min="2.4" max="4.5" step="0.2" value="2.8" class="slider-range" id="ac-input-h">
+                        </div>
+
+                        <!-- Sun Exposure -->
+                        <div class="control-group">
+                            <div class="control-label-row"><span>Sunlight & Heat Exposure</span></div>
+                            <div class="toggle-group" id="ac-group-sun">
+                                <button type="button" class="btn-toggle active" data-sun="low">Low (Shaded)</button>
+                                <button type="button" class="btn-toggle" data-sun="med">Moderate (Morning)</button>
+                                <button type="button" class="btn-toggle" data-sun="high">High (West/Roof)</button>
+                            </div>
+                        </div>
+
+                        <!-- Occupants -->
+                        <div class="control-group">
+                            <div class="control-label-row">
+                                <span>Occupants in Room</span>
+                                <span class="val-badge" id="ac-lbl-people">1 Person</span>
+                            </div>
+                            <input type="range" min="1" max="8" step="1" value="1" class="slider-range" id="ac-input-people">
+                        </div>
+
+                        <hr style="border: 0; border-top: 1px solid var(--border); margin: 1.8rem 0;">
+
+                        <h3 class="panel-heading">
+                            <span>⚡</span> Electrical Consumption & Tariffs
+                        </h3>
+
+                        <!-- Compressor Type -->
+                        <div class="control-group">
+                            <div class="control-label-row"><span>Compressor Motor Type</span></div>
+                            <div class="toggle-group" id="ac-group-tech">
+                                <button type="button" class="btn-toggle active" data-tech="inverter">⚡ Inverter (Energy Saver)</button>
+                                <button type="button" class="btn-toggle" data-tech="standard">❄️ Standard (Non-Inverter)</button>
+                            </div>
+                        </div>
+
+                        <!-- Daily Usage Hours -->
+                        <div class="control-group">
+                            <div class="control-label-row">
+                                <span>Daily Usage Hours</span>
+                                <span class="val-badge" id="ac-lbl-hours">8 Hours / Day</span>
+                            </div>
+                            <input type="range" min="1" max="24" step="1" value="8" class="slider-range" id="ac-input-hours">
+                        </div>
+
+                        <!-- Thermostat Target -->
+                        <div class="control-group">
+                            <div class="control-label-row">
+                                <span>Thermostat Setpoint</span>
+                                <span class="val-badge" id="ac-lbl-temp">24 °C (Eco Friendly)</span>
+                            </div>
+                            <input type="range" min="18" max="28" step="1" value="24" class="slider-range" id="ac-input-temp">
+                        </div>
+
+                        <!-- Electricity Tariff -->
+                        <div class="control-group">
+                            <div class="control-label-row"><span>Electricity Tariff / kWh</span></div>
+                            <div class="toggle-group" id="ac-group-tariff" style="margin-bottom: 0.8rem;">
+                                <button type="button" class="btn-toggle active" data-curr="IDR" data-rate="1444.70">PLN Rp 1.444/kWh</button>
+                                <button type="button" class="btn-toggle" data-curr="USD" data-rate="0.16">US Avg $0.16/kWh</button>
+                                <button type="button" class="btn-toggle" data-curr="EUR" data-rate="0.28">EU Avg €0.28/kWh</button>
+                            </div>
+                            <div style="display:flex; align-items:center; gap:0.6rem;">
+                                <span style="font-size:0.85rem; color:var(--text-secondary);">Custom Rate:</span>
+                                <input type="number" id="ac-custom-rate" value="1444.70" step="any" class="form-input" style="width: 140px;">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Output & Analysis Column -->
+                    <div class="tool-panel">
+                        <h3 class="panel-heading">
+                            <span>❄️</span> Sizing & Electricity Output
+                        </h3>
+
+                        <!-- 2D Room Graphic -->
+                        <div class="room-visual-box">
+                            <div class="room-ac-unit">
+                                <span>AC BLOWER</span>
+                            </div>
+                            <div class="air-wave"></div>
+                            <div class="room-info-overlay">
+                                <span id="ac-overlay-area">Floor: 9.0 m²</span>
+                                <span id="ac-overlay-vol">Vol: 25.2 m³</span>
+                                <span id="ac-overlay-ratio">Ratio: 1.0</span>
+                            </div>
+                        </div>
+
+                        <!-- Recommendation Banner -->
+                        <div class="hero-rec-banner">
+                            <div class="hero-rec-title" id="ac-rec-pk">0.5 PK (1/2 HP)</div>
+                            <div class="hero-rec-sub" id="ac-rec-btu">Recommended: ~5,200 BTU/hr</div>
+                            <div class="hero-rec-desc" id="ac-rec-desc">Optimal coverage for rooms up to 10 m². Fast and quiet cooling.</div>
+                        </div>
+
+                        <!-- Bill Matrix -->
+                        <h4 style="font-size:0.95rem; margin-bottom:0.8rem; color:var(--text-primary);">Estimated Electricity Bill</h4>
+                        <div class="metrics-grid">
+                            <div class="metric-card">
+                                <div class="metric-card-label">Daily</div>
+                                <div class="metric-card-val" id="ac-cost-daily">Rp 2.889</div>
+                                <div class="metric-card-sub" id="ac-kwh-daily">2.0 kWh</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-card-label">Monthly (30d)</div>
+                                <div class="metric-card-val" id="ac-cost-monthly">Rp 86.682</div>
+                                <div class="metric-card-sub" id="ac-kwh-monthly">60.0 kWh</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-card-label">Annual (365d)</div>
+                                <div class="metric-card-val" id="ac-cost-annual">Rp 1.054.631</div>
+                                <div class="metric-card-sub" id="ac-kwh-annual">730 kWh</div>
+                            </div>
+                        </div>
+
+                        <!-- Inverter Savings Callout -->
+                        <div class="highlight-callout" id="ac-savings-box">
+                            <div>
+                                <h5>💰 Inverter Efficiency Impact</h5>
+                                <p id="ac-savings-desc">Save up to ~38% power compared to standard non-inverter models.</p>
+                            </div>
+                            <div class="highlight-val" id="ac-savings-val">+Rp 53.000 / mo</div>
+                        </div>
+
+                        <!-- Carbon Footprint -->
+                        <div class="info-pill-row">
+                            <span>🌱 Estimated Carbon Footprint:</span>
+                            <strong id="ac-eco-co2">~47 kg CO₂ / month</strong>
+                        </div>
+
+                        <!-- Copy Report Button -->
+                        <button type="button" class="btn-action-wide" id="ac-btn-copy">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                            <span>Copy Full AC Sizing Report</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================== -->
+            <!-- APP 2: APPLIANCE POWER & ENERGY AUDIT TOOL     -->
+            <!-- ============================================== -->
+            <div class="app-view" id="app-energy-audit">
+                <div class="app-header">
+                    <div class="app-header-top">
+                        <span class="app-cat-tag">Home Energy Management</span>
+                    </div>
+                    <h1>Home Appliance Energy Audit Tool</h1>
+                    <p>Calculate electrical consumption across all household appliances (refrigerator, computers, TVs, washing machine, and lighting) to spot phantom loads and power vampires.</p>
+                </div>
+
+                <div class="tool-grid">
+                    <div class="tool-panel">
+                        <h3 class="panel-heading">
+                            <span>🔌</span> Appliance Power Inventory
+                        </h3>
+                        <p style="font-size:0.85rem; color:var(--text-secondary); margin-bottom:1.2rem;">
+                            Adjust the operating hours for common household electronics to calculate your total monthly household power consumption.
+                        </p>
+
+                        <div id="appliances-list">
+                            <!-- Injected by JS -->
+                        </div>
+                    </div>
+
+                    <div class="tool-panel">
+                        <h3 class="panel-heading">
+                            <span>📊</span> Cumulative Energy Bill
+                        </h3>
+
+                        <div class="hero-rec-banner" style="background: linear-gradient(135deg, #371854, #1b1226);">
+                            <div class="hero-rec-title" id="audit-total-cost">Rp 485.000</div>
+                            <div class="hero-rec-sub" id="audit-total-kwh">Total: 335.7 kWh / month</div>
+                            <div class="hero-rec-desc">Estimated baseline household electricity bill without heating/HVAC.</div>
+                        </div>
+
+                        <h4 style="font-size:0.95rem; margin-bottom:0.8rem; color:var(--text-primary);">Top Power Consumers</h4>
+                        <div id="audit-top-consumers" style="display:flex; flex-direction:column; gap:0.6rem; margin-bottom:1.5rem;">
+                            <!-- Injected by JS -->
+                        </div>
+
+                        <button type="button" class="btn-action-wide" id="audit-btn-copy">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                            <span>Copy Appliance Energy Breakdown</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================== -->
+            <!-- APP 3: ROOM LIGHTING & LUX SIZER              -->
+            <!-- ============================================== -->
+            <div class="app-view" id="app-lighting">
+                <div class="app-header">
+                    <div class="app-header-top">
+                        <span class="app-cat-tag">Architectural & Interior Optics</span>
+                    </div>
+                    <h1>Room Lighting & Lumens Sizing Calculator</h1>
+                    <p>Determine the optimal total light output (Lumens) and recommended number of LED bulbs or fixtures based on room purpose and IESNA lux illumination standards.</p>
+                </div>
+
+                <div class="tool-grid">
+                    <div class="tool-panel">
+                        <h3 class="panel-heading">
+                            <span>📐</span> Room Purpose & Dimensions
+                        </h3>
+
+                        <!-- Room Purpose -->
+                        <div class="control-group">
+                            <div class="control-label-row"><span>Room Function / Task Type</span></div>
+                            <select id="light-room-type" class="form-input" style="font-size:0.9rem; cursor:pointer;">
+                                <option value="150">Living Room / Bedroom (Relaxed - 150 Lux)</option>
+                                <option value="300" selected>Home Office / Study (Productivity - 300 Lux)</option>
+                                <option value="400">Kitchen & Food Prep (High Visibility - 400 Lux)</option>
+                                <option value="500">Workshop / Detailed Crafting (Precision - 500 Lux)</option>
+                                <option value="100">Hallway / Corridor (Navigation - 100 Lux)</option>
+                            </select>
+                        </div>
+
+                        <!-- Room Area -->
+                        <div class="control-group">
+                            <div class="control-label-row">
+                                <span>Room Length</span>
+                                <span class="val-badge" id="light-lbl-len">4.0 m</span>
+                            </div>
+                            <input type="range" min="2" max="12" step="0.5" value="4" class="slider-range" id="light-input-len">
+                        </div>
+
+                        <div class="control-group">
+                            <div class="control-label-row">
+                                <span>Room Width</span>
+                                <span class="val-badge" id="light-lbl-wid">4.0 m</span>
+                            </div>
+                            <input type="range" min="2" max="12" step="0.5" value="4" class="slider-range" id="light-input-wid">
+                        </div>
+
+                        <!-- Desired Bulb Wattage -->
+                        <div class="control-group">
+                            <div class="control-label-row"><span>Fixture LED Bulb Rating</span></div>
+                            <div class="toggle-group" id="light-group-bulb">
+                                <button type="button" class="btn-toggle" data-watts="5" data-lumens="450">5W (450 lm)</button>
+                                <button type="button" class="btn-toggle active" data-watts="9" data-lumens="806">9W (806 lm)</button>
+                                <button type="button" class="btn-toggle" data-watts="12" data-lumens="1100">12W (1100 lm)</button>
+                                <button type="button" class="btn-toggle" data-watts="18" data-lumens="1800">18W (1800 lm)</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tool-panel">
+                        <h3 class="panel-heading">
+                            <span>💡</span> Recommended Lighting Fixtures
+                        </h3>
+
+                        <!-- Bulb Visualizer -->
+                        <div class="light-bulb-preview" id="light-preview-box">
+                            <!-- Injected by JS -->
+                        </div>
+
+                        <div class="hero-rec-banner" style="background: linear-gradient(135deg, #422a10, #24190c); border-color:#f59e0b;">
+                            <div class="hero-rec-title" id="light-rec-bulbs" style="color:#fef3c7;">6 LED Bulbs</div>
+                            <div class="hero-rec-sub" id="light-rec-lumens" style="color:#f59e0b;">Total Target: ~4,800 Lumens</div>
+                            <div class="hero-rec-desc">Evenly distributed illumination to prevent eye fatigue.</div>
+                        </div>
+
+                        <div class="metrics-grid">
+                            <div class="metric-card">
+                                <div class="metric-card-label">Room Area</div>
+                                <div class="metric-card-val" id="light-stat-area">16.0 m²</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-card-label">Total LED Power</div>
+                                <div class="metric-card-val" id="light-stat-power">54 Watts</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-card-label">Energy / 5h Day</div>
+                                <div class="metric-card-val" id="light-stat-kwh">0.27 kWh</div>
+                            </div>
+                        </div>
+
+                        <button type="button" class="btn-action-wide" id="light-btn-copy">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                            <span>Copy Lighting Specification</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+        <div class="container">
+            <p>© 2025 John Doe • Interactive Utilities Suite. <a href="/index.html" style="color:var(--accent); margin-left:8px;">← Return to Main Portfolio</a></p>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="app-toast">
+        <span id="toast-msg">✓ Report copied to clipboard!</span>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // ------------------------------------
+        // Theme Persistence
+        // ------------------------------------
+        const themeToggle = document.getElementById('theme-toggle');
+        const sunIcon = document.getElementById('sun-icon');
+        const moonIcon = document.getElementById('moon-icon');
+
+        const currentTheme = localStorage.getItem('theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', currentTheme);
+        updateThemeIcon(currentTheme);
+
+        themeToggle.addEventListener('click', () => {
+            const nextTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', nextTheme);
+            localStorage.setItem('theme', nextTheme);
+            updateThemeIcon(nextTheme);
+        });
+
+        function updateThemeIcon(theme) {
+            if (theme === 'light') {
+                sunIcon.style.display = 'none';
+                moonIcon.style.display = 'block';
+            } else {
+                sunIcon.style.display = 'block';
+                moonIcon.style.display = 'none';
+            }
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('app-toast');
+            document.getElementById('toast-msg').textContent = msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2800);
+        }
+
+        // ------------------------------------
+        // App Switcher Navigation (Hash Support)
+        // ------------------------------------
+        const tabs = document.querySelectorAll('.app-tab');
+        const views = document.querySelectorAll('.app-view');
+
+        function switchApp(targetId) {
+            tabs.forEach(t => {
+                t.classList.toggle('active', t.dataset.target === targetId);
+            });
+            views.forEach(v => {
+                v.classList.toggle('active', v.id === targetId);
+            });
+            window.location.hash = targetId.replace('app-', '');
+        }
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                switchApp(tab.dataset.target);
+            });
+        });
+
+        // Check URL hash on load
+        if (window.location.hash) {
+            const hashAppId = 'app-' + window.location.hash.replace('#', '');
+            if (document.getElementById(hashAppId)) {
+                switchApp(hashAppId);
+            }
+        }
+
+        // ==============================================
+        // --- 1. AC Capacity & Electricity Simulator ---
+        // ==============================================
+        (function initAC() {
+            const inputLen = document.getElementById('ac-input-len');
+            const inputWid = document.getElementById('ac-input-wid');
+            const inputH = document.getElementById('ac-input-h');
+            const inputPeople = document.getElementById('ac-input-people');
+            const inputHours = document.getElementById('ac-input-hours');
+            const inputTemp = document.getElementById('ac-input-temp');
+            const customRate = document.getElementById('ac-custom-rate');
+
+            const lblLen = document.getElementById('ac-lbl-len');
+            const lblWid = document.getElementById('ac-lbl-wid');
+            const lblH = document.getElementById('ac-lbl-h');
+            const lblPeople = document.getElementById('ac-lbl-people');
+            const lblHours = document.getElementById('ac-lbl-hours');
+            const lblTemp = document.getElementById('ac-lbl-temp');
+
+            const overlayArea = document.getElementById('ac-overlay-area');
+            const overlayVol = document.getElementById('ac-overlay-vol');
+            const overlayRatio = document.getElementById('ac-overlay-ratio');
+
+            const recPk = document.getElementById('ac-rec-pk');
+            const recBtu = document.getElementById('ac-rec-btu');
+            const recDesc = document.getElementById('ac-rec-desc');
+
+            const costDaily = document.getElementById('ac-cost-daily');
+            const costMonthly = document.getElementById('ac-cost-monthly');
+            const costAnnual = document.getElementById('ac-cost-annual');
+            const kwhDaily = document.getElementById('ac-kwh-daily');
+            const kwhMonthly = document.getElementById('ac-kwh-monthly');
+            const kwhAnnual = document.getElementById('ac-kwh-annual');
+
+            const savingsDesc = document.getElementById('ac-savings-desc');
+            const savingsVal = document.getElementById('ac-savings-val');
+            const ecoCo2 = document.getElementById('ac-eco-co2');
+            const btnCopy = document.getElementById('ac-btn-copy');
+
+            let currentSun = 'low';
+            let currentTech = 'inverter';
+            let currentCurr = 'IDR';
+
+            // Sun buttons
+            const sunBtns = document.querySelectorAll('#ac-group-sun .btn-toggle');
+            sunBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    sunBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentSun = btn.dataset.sun;
+                    calc();
+                });
+            });
+
+            // Tech buttons
+            const techBtns = document.querySelectorAll('#ac-group-tech .btn-toggle');
+            techBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    techBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentTech = btn.dataset.tech;
+                    calc();
+                });
+            });
+
+            // Tariff buttons
+            const tariffBtns = document.querySelectorAll('#ac-group-tariff .btn-toggle');
+            tariffBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    tariffBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentCurr = btn.dataset.curr;
+                    customRate.value = btn.dataset.rate;
+                    calc();
+                });
+            });
+
+            // Presets
+            const presets = document.querySelectorAll('#ac-preset-row .btn-preset');
+            presets.forEach(p => {
+                p.addEventListener('click', () => {
+                    presets.forEach(b => b.classList.remove('active'));
+                    p.classList.add('active');
+                    inputLen.value = p.dataset.len;
+                    inputWid.value = p.dataset.wid;
+                    inputH.value = p.dataset.h;
+                    inputPeople.value = p.dataset.people;
+                    sunBtns.forEach(b => b.classList.toggle('active', b.dataset.sun === p.dataset.sun));
+                    currentSun = p.dataset.sun;
+                    calc();
+                });
+            });
+
+            // Input listeners
+            [inputLen, inputWid, inputH, inputPeople, inputHours, inputTemp, customRate].forEach(el => {
+                el.addEventListener('input', () => {
+                    if (el === inputLen || el === inputWid || el === inputH || el === inputPeople) {
+                        presets.forEach(b => b.classList.remove('active'));
+                    }
+                    calc();
+                });
+            });
+
+            function formatCurrency(val, curr) {
+                if (curr === 'IDR') return 'Rp ' + Math.round(val).toLocaleString('id-ID');
+                if (curr === 'USD') return '$' + val.toFixed(2);
+                if (curr === 'EUR') return '€' + val.toFixed(2);
+                return val.toFixed(2);
+            }
+
+            function calc() {
+                const len = parseFloat(inputLen.value);
+                const wid = parseFloat(inputWid.value);
+                const h = parseFloat(inputH.value);
+                const people = parseInt(inputPeople.value, 10);
+                const hours = parseFloat(inputHours.value);
+                const temp = parseInt(inputTemp.value, 10);
+                const rate = parseFloat(customRate.value) || 0;
+
+                lblLen.textContent = `${len.toFixed(1)} m`;
+                lblWid.textContent = `${wid.toFixed(1)} m`;
+                lblH.textContent = `${h.toFixed(1)} m`;
+                lblPeople.textContent = `${people} ${people > 1 ? 'People' : 'Person'}`;
+                lblHours.textContent = `${hours} Hours / Day`;
+                lblTemp.textContent = `${temp} °C ${temp >= 24 ? '(Eco Friendly)' : '(High Power)'}`;
+
+                const area = len * wid;
+                const vol = area * h;
+                overlayArea.textContent = `Floor: ${area.toFixed(1)} m²`;
+                overlayVol.textContent = `Vol: ${vol.toFixed(1)} m³`;
+                overlayRatio.textContent = `Ratio: ${(len / wid).toFixed(2)}`;
+
+                let baseBtu = area * 500;
+                if (h > 2.8) baseBtu += (h - 2.8) * area * 120;
+                let sunFactor = currentSun === 'high' ? 1.30 : (currentSun === 'med' ? 1.15 : 1.0);
+                const occupantBtu = (people - 1) * 550;
+                const requiredBtu = Math.round((baseBtu * sunFactor) + occupantBtu);
+
+                let pkText = '0.5 PK (1/2 HP)';
+                let pkWattsStd = 380;
+                let pkWattsInv = 320;
+                let desc = `Optimal coverage for room up to 10 m². Fast and quiet cooling.`;
+
+                if (requiredBtu <= 5600) {
+                    pkText = '0.5 PK (1/2 HP)';
+                    pkWattsStd = 380; pkWattsInv = 320;
+                    desc = `Perfect for compact rooms up to 10 m². Quiet night operation and low base wattage.`;
+                } else if (requiredBtu <= 7800) {
+                    pkText = '0.75 PK (3/4 HP)';
+                    pkWattsStd = 590; pkWattsInv = 520;
+                    desc = `Ideal for standard bedrooms (10-14 m²). Balances cooling speed with electrical draw.`;
+                } else if (requiredBtu <= 10500) {
+                    pkText = '1.0 PK (1 HP)';
+                    pkWattsStd = 780; pkWattsInv = 660;
+                    desc = `Best choice for master bedrooms or medium home offices (14-18 m²).`;
+                } else if (requiredBtu <= 14500) {
+                    pkText = '1.5 PK (1.5 HP)';
+                    pkWattsStd = 1120; pkWattsInv = 950;
+                    desc = `Heavy-duty cooling for large master suites, studio rooms, or open layouts (18-24 m²).`;
+                } else if (requiredBtu <= 20500) {
+                    pkText = '2.0 PK (2 HP)';
+                    pkWattsStd = 1750; pkWattsInv = 1480;
+                    desc = `High capacity for living rooms, open spaces, or high heat loads (24-36 m²).`;
+                } else {
+                    pkText = '2.5 PK (2.5 HP)';
+                    pkWattsStd = 2250; pkWattsInv = 1880;
+                    desc = `Maximum residential capacity for large open living areas or offices (36-48 m²).`;
+                }
+
+                recPk.textContent = pkText;
+                recBtu.textContent = `Estimated Cooling Load: ~${requiredBtu.toLocaleString()} BTU/hr`;
+                recDesc.textContent = desc;
+
+                const tempDiff = 24 - temp;
+                const tempFactor = 1.0 + (tempDiff * 0.055);
+                const kwhStdDaily = (pkWattsStd * hours / 1000) * 0.72 * tempFactor;
+                const kwhInvDaily = (pkWattsInv * hours / 1000) * 0.45 * tempFactor;
+
+                const chosenDailyKwh = currentTech === 'inverter' ? kwhInvDaily : kwhStdDaily;
+                const chosenMonthlyKwh = chosenDailyKwh * 30;
+                const chosenAnnualKwh = chosenDailyKwh * 365;
+
+                costDaily.textContent = formatCurrency(chosenDailyKwh * rate, currentCurr);
+                costMonthly.textContent = formatCurrency(chosenMonthlyKwh * rate, currentCurr);
+                costAnnual.textContent = formatCurrency(chosenAnnualKwh * rate, currentCurr);
+
+                kwhDaily.textContent = `${chosenDailyKwh.toFixed(1)} kWh`;
+                kwhMonthly.textContent = `${chosenMonthlyKwh.toFixed(1)} kWh`;
+                kwhAnnual.textContent = `${Math.round(chosenAnnualKwh)} kWh`;
+
+                const monthlySavingsVal = (kwhStdDaily - kwhInvDaily) * 30 * rate;
+                const savingsPercent = Math.round(((kwhStdDaily - kwhInvDaily) / kwhStdDaily) * 100);
+
+                if (currentTech === 'inverter') {
+                    savingsDesc.textContent = `Inverter compressor saves ~${savingsPercent}% power vs standard units.`;
+                    savingsVal.textContent = `+${formatCurrency(monthlySavingsVal, currentCurr)} / mo`;
+                } else {
+                    savingsDesc.textContent = `Upgrading to Inverter would save ~${savingsPercent}% on your monthly bill.`;
+                    savingsVal.textContent = `-${formatCurrency(monthlySavingsVal, currentCurr)} / mo`;
+                }
+
+                ecoCo2.textContent = `~${Math.round(chosenMonthlyKwh * 0.78)} kg CO₂ / month`;
+            }
+
+            btnCopy.addEventListener('click', () => {
+                const report = `AC SIZING & ELECTRICITY COST REPORT
+• Room: ${lblLen.textContent} × ${lblWid.textContent} × ${lblH.textContent} (${overlayArea.textContent})
+• Recommended Unit: ${recPk.textContent} (${recBtu.textContent})
+• Compressor: ${currentTech.toUpperCase()}
+• Daily Usage: ${lblHours.textContent} @ ${lblTemp.textContent}
+• Monthly Bill: ${costMonthly.textContent} (${kwhMonthly.textContent})
+• Annual Bill: ${costAnnual.textContent} (${kwhAnnual.textContent})
+• Monthly Inverter Savings: ${savingsVal.textContent}
+• Carbon Footprint: ${ecoCo2.textContent}`;
+                navigator.clipboard.writeText(report).then(() => showToast("✓ AC Sizing report copied!"));
+            });
+
+            calc();
+        })();
+
+        // ==============================================
+        // --- 2. Appliance Energy Auditor Logic      ---
+        // ==============================================
+        (function initAuditor() {
+            const appliances = [
+                { id: 'fridge', name: 'Refrigerator (Inverter Double Door)', watts: 120, defaultHours: 24, duty: 0.35, icon: '🧊' },
+                { id: 'tv', name: 'Smart TV 55" 4K', watts: 110, defaultHours: 5, duty: 1.0, icon: '📺' },
+                { id: 'pc', name: 'Desktop Workstation / Gaming PC', watts: 320, defaultHours: 7, duty: 0.75, icon: '🖥️' },
+                { id: 'laptop', name: 'Work Laptop & Monitor', watts: 65, defaultHours: 8, duty: 0.85, icon: '💻' },
+                { id: 'wm', name: 'Washing Machine (Cycle)', watts: 450, defaultHours: 1, duty: 0.8, icon: '🧺' },
+                { id: 'dispenser', name: 'Water Dispenser (Hot/Cold)', watts: 400, defaultHours: 8, duty: 0.3, icon: '💧' },
+                { id: 'rice', name: 'Rice Cooker (Cook + Warm)', watts: 350, defaultHours: 3, duty: 0.4, icon: '🍚' },
+                { id: 'router', name: 'Wi-Fi 6 Router & Modem', watts: 15, defaultHours: 24, duty: 1.0, icon: '📡' },
+            ];
+
+            const container = document.getElementById('appliances-list');
+            const totalCostEl = document.getElementById('audit-total-cost');
+            const totalKwhEl = document.getElementById('audit-total-kwh');
+            const topListEl = document.getElementById('audit-top-consumers');
+            const copyBtn = document.getElementById('audit-btn-copy');
+
+            const rate = 1444.70; // IDR default
+
+            appliances.forEach(app => {
+                const item = document.createElement('div');
+                item.className = 'control-group';
+                item.style.marginBottom = '1.2rem';
+                item.innerHTML = `
+                    <div class="control-label-row">
+                        <span>${app.icon} <strong>${app.name}</strong> (${app.watts}W)</span>
+                        <span class="val-badge" id="lbl-app-${app.id}">${app.defaultHours} h/day</span>
+                    </div>
+                    <input type="range" min="0" max="24" step="0.5" value="${app.defaultHours}" class="slider-range" id="input-app-${app.id}">
+                `;
+                container.appendChild(item);
+
+                const slider = item.querySelector('input');
+                slider.addEventListener('input', () => {
+                    app.hours = parseFloat(slider.value);
+                    document.getElementById(`lbl-app-${app.id}`).textContent = `${app.hours} h/day`;
+                    calcAudit();
+                });
+                app.hours = app.defaultHours;
+            });
+
+            function calcAudit() {
+                let totalMonthlyKwh = 0;
+                const itemsWithKwh = appliances.map(a => {
+                    const dailyKwh = (a.watts * a.hours / 1000) * a.duty;
+                    const monthlyKwh = dailyKwh * 30;
+                    totalMonthlyKwh += monthlyKwh;
+                    return { ...a, monthlyKwh, cost: monthlyKwh * rate };
+                });
+
+                totalCostEl.textContent = 'Rp ' + Math.round(totalMonthlyKwh * rate).toLocaleString('id-ID');
+                totalKwhEl.textContent = `Total: ${totalMonthlyKwh.toFixed(1)} kWh / month`;
+
+                // Sort top 3
+                itemsWithKwh.sort((a, b) => b.monthlyKwh - a.monthlyKwh);
+                topListEl.innerHTML = '';
+                itemsWithKwh.slice(0, 4).forEach(item => {
+                    const row = document.createElement('div');
+                    row.className = 'info-pill-row';
+                    row.innerHTML = `
+                        <span>${item.icon} ${item.name}</span>
+                        <strong>Rp ${Math.round(item.cost).toLocaleString('id-ID')} (${item.monthlyKwh.toFixed(1)} kWh)</strong>
+                    `;
+                    topListEl.appendChild(row);
+                });
+            }
+
+            copyBtn.addEventListener('click', () => {
+                const report = `HOME APPLIANCE ENERGY AUDIT
+Total Consumption: ${totalKwhEl.textContent}
+Total Estimated Cost: ${totalCostEl.textContent}
+Calculated via John's AppLab`;
+                navigator.clipboard.writeText(report).then(() => showToast("✓ Energy audit report copied!"));
+            });
+
+            calcAudit();
+        })();
+
+        // ==============================================
+        // --- 3. Room Lighting & Lux Sizer Logic     ---
+        // ==============================================
+        (function initLighting() {
+            const selectType = document.getElementById('light-room-type');
+            const inputLen = document.getElementById('light-input-len');
+            const inputWid = document.getElementById('light-input-wid');
+            const lblLen = document.getElementById('light-lbl-len');
+            const lblWid = document.getElementById('light-lbl-wid');
+
+            const previewBox = document.getElementById('light-preview-box');
+            const recBulbs = document.getElementById('light-rec-bulbs');
+            const recLumens = document.getElementById('light-rec-lumens');
+            const statArea = document.getElementById('light-stat-area');
+            const statPower = document.getElementById('light-stat-power');
+            const statKwh = document.getElementById('light-stat-kwh');
+            const copyBtn = document.getElementById('light-btn-copy');
+
+            let bulbWatts = 9;
+            let bulbLumens = 806;
+
+            const bulbBtns = document.querySelectorAll('#light-group-bulb .btn-toggle');
+            bulbBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    bulbBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    bulbWatts = parseInt(btn.dataset.watts, 10);
+                    bulbLumens = parseInt(btn.dataset.lumens, 10);
+                    calcLight();
+                });
+            });
+
+            [selectType, inputLen, inputWid].forEach(el => {
+                el.addEventListener('input', calcLight);
+            });
+
+            function calcLight() {
+                const len = parseFloat(inputLen.value);
+                const wid = parseFloat(inputWid.value);
+                const lux = parseInt(selectType.value, 10);
+
+                lblLen.textContent = `${len.toFixed(1)} m`;
+                lblWid.textContent = `${wid.toFixed(1)} m`;
+
+                const area = len * wid;
+                statArea.textContent = `${area.toFixed(1)} m²`;
+
+                // Total lumens needed = Area (m2) * Target Lux / Light Loss Factor (~0.8)
+                const totalLumens = Math.round((area * lux) / 0.8);
+                const neededBulbs = Math.max(1, Math.ceil(totalLumens / bulbLumens));
+                const totalWatts = neededBulbs * bulbWatts;
+                const dailyKwh = (totalWatts * 5) / 1000;
+
+                recBulbs.textContent = `${neededBulbs} × ${bulbWatts}W LED Bulbs`;
+                recLumens.textContent = `Total Light: ~${totalLumens.toLocaleString()} Lumens (${lux} Lux)`;
+                statPower.textContent = `${totalWatts} Watts`;
+                statKwh.textContent = `${dailyKwh.toFixed(2)} kWh`;
+
+                // Render Visual Bulbs
+                previewBox.innerHTML = '';
+                const displayCount = Math.min(neededBulbs, 18);
+                for (let i = 0; i < displayCount; i++) {
+                    const b = document.createElement('div');
+                    b.className = 'bulb-icon-unit';
+                    b.textContent = '💡';
+                    previewBox.appendChild(b);
+                }
+                if (neededBulbs > 18) {
+                    const more = document.createElement('span');
+                    more.style.alignSelf = 'center';
+                    more.style.color = 'var(--text-secondary)';
+                    more.style.fontSize = '0.85rem';
+                    more.textContent = `+${neededBulbs - 18} more fixtures`;
+                    previewBox.appendChild(more);
+                }
+            }
+
+            copyBtn.addEventListener('click', () => {
+                const report = `ROOM LIGHTING SPECIFICATION
+Room Area: ${statArea.textContent}
+Target Illumination: ${recLumens.textContent}
+Recommended Fixtures: ${recBulbs.textContent} (${statPower.textContent})
+Estimated Usage (5h/day): ${statKwh.textContent}`;
+                navigator.clipboard.writeText(report).then(() => showToast("✓ Lighting spec copied!"));
+            });
+
+            calcLight();
+        })();
+    </script>
+</body>
+</html>
